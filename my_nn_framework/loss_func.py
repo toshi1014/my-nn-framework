@@ -1,0 +1,6 @@
+class LossFunc:
+    def __init__(self):
+        ...
+
+    def mes(self):
+        ...

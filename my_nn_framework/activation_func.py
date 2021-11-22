@@ -1,0 +1,3 @@
+class ActivationFunc:
+    def __init__(self, str_activation_func):
+        ...
