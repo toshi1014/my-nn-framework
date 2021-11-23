@@ -1,3 +1,4 @@
+import numpy as np
 from my_nn_framework import Dense, LossFunc, SGD
 
 
@@ -33,11 +34,14 @@ class Model(LossFunc):
     def compile(self, optimizer, loss):
         # TODO: add optimizers
         if optimizer == "sgd":
-            self.optimizer = SGD()
+            self.optimizer = SGD(self.layer_list, str_loss_func=loss)
 
         # TODO: add losses
         if loss == "mse":
             self.loss_func = self.mes
 
-    def fit(self, x, y, epochs, batch_size=1):
-        ...
+    def fit(self, x, y, epochs, batch_size=1, learning_rate=0.001):
+        assert len(x) == len(y)
+
+        for epoch in range(epochs):
+            self.optimizer(x, y, batch_size, learning_rate)

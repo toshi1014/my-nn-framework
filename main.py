@@ -19,5 +19,4 @@ model.compile(optimizer="sgd", loss="mse")
 
 model.fit(x_train, y_train, epochs=5, batch_size=1)
 
-
 import pdb; pdb.set_trace()
