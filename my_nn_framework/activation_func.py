@@ -21,12 +21,10 @@ class ActivationFunc:
         return 1
 
     def relu(self, x):
-        # return np.array([[max(0, i)] for i in x], dtype=object)
         return np.array([[max(0, i)] for i in x], dtype=object)
 
     def relu_derivative(self, x):
         val = np.array([[1] if (i>0) else [0] for i in x], dtype=object)
-        # import pdb; pdb.set_trace()
         return val
 
     def sigmoid(self, x):
@@ -34,7 +32,6 @@ class ActivationFunc:
 
     def sigmoid_derivative(self, x):
         val =  self.sigmoid(x) * (1 - self.sigmoid(x))
-        # import pdb; pdb.set_trace()
         return val
 
     def loss_derivative(self, str_loss_func, source, target):

@@ -70,7 +70,7 @@ class Model(LossFunc):
         for layer in self.layer_list:
             z = np.dot(layer.w, activation) + layer.b
             activation = layer.activation_func(z)
-        return activation
+        return activation.reshape(-1)       ## into 1D vector
 
     def predict(self, x_test):
         predicted_list = []
@@ -78,3 +78,16 @@ class Model(LossFunc):
             predicted = self.feedforward(x)
             predicted_list.append(predicted)
         return predicted_list
+
+    @classmethod
+    def evaluate(cls, predicted, y_test):
+        assert len(predicted) == len(y_test)
+        correct_or_wrong_list = []
+        for p, y in zip(predicted, y_test):
+            if p == y:
+                correct_or_wrong = 1
+            else:
+                correct_or_wrong = 0
+            correct_or_wrong_list.append(correct_or_wrong)
+
+        return sum(correct_or_wrong_list)/len(correct_or_wrong_list)
