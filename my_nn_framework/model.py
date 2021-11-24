@@ -56,8 +56,8 @@ class Model(LossFunc):
 
         for epoch in range(epochs):
             loss = self.optimizer(x, y, batch_size, learning_rate)
-            print(f"epoch {epoch}")
-            print(f"loss: {loss}")
+            # print(f"epoch {epoch}")
+            # print(f"loss: {loss}")
             loss_list.append(loss)
 
         fig = plt.figure()

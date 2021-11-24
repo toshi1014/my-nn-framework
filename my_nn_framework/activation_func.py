@@ -33,7 +33,3 @@ class ActivationFunc:
     def sigmoid_derivative(self, x):
         val =  self.sigmoid(x) * (1 - self.sigmoid(x))
         return val
-
-    def loss_derivative(self, str_loss_func, source, target):
-        if str_loss_func == "mse":
-            return source - target

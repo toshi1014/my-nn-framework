@@ -1,5 +1,6 @@
 import random
 import numpy as np
+from my_nn_framework import LossFunc
 
 
 class SGD:
@@ -15,7 +16,7 @@ class SGD:
         return loss
 
     def loss_derivative(self, layer_idx, source, target):
-        return self.layer_list[layer_idx].loss_derivative(self.str_loss_func, source, target)
+        return LossFunc.loss_derivative(self.str_loss_func, source, target)
 
     def activation_func_derivative(self, layer_idx, x):
         return self.layer_list[layer_idx].activation_func_derivative(x)
@@ -26,6 +27,7 @@ class SGD:
 
         ## activation = activation_func(z)
         activation = np.reshape(x, (len(x), 1))     ## make x in column vec
+        y = np.reshape(y, (len(y), 1))              ## make y in column vec
         activation_list = [activation]
         z_list = []                         ## z = w @ pre_activation + b
 
@@ -35,9 +37,13 @@ class SGD:
             z_list.append(z)
 
             activation = layer.activation_func(z)
+
+            if np.isnan(activation).any():
+                raise Exception("got nan")
+
             activation_list.append(activation)
 
-        loss_now = (y - activation)[0][0]
+        loss_now = LossFunc.get_loss(self.str_loss_func, activation, y)
 
         ## backward
         loss_derivatived = self.loss_derivative(layer_idx=-1, source=activation_list[-1], target=y)
@@ -54,7 +60,6 @@ class SGD:
             dl_db[-i] = delta
 
         return dl_dw, dl_db, loss_now
-
 
     def update_minibatch(self, minibatch, learning_rate):
         sum_dl_dw = np.array([np.zeros(layer.w.shape) for layer in self.layer_list], dtype=object)
