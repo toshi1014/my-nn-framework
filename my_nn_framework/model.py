@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 from my_nn_framework import Dense, LossFunc, SGD
 
 
@@ -31,6 +32,14 @@ class Model(LossFunc):
     def summary(self):
         print(self)
 
+    def show_weights(self):
+        for layer in self.layer_list:
+            print("=================================")
+            print("weight:\n", layer.w)
+            print("\n\nbias:\n", layer.b)
+            print("\n\nactivation_func:\n", layer.activation_func)
+        print("=================================")
+
     def compile(self, optimizer, loss):
         # TODO: add optimizers
         if optimizer == "sgd":
@@ -43,5 +52,29 @@ class Model(LossFunc):
     def fit(self, x, y, epochs, batch_size=1, learning_rate=0.001):
         assert len(x) == len(y)
 
+        loss_list = []
+
         for epoch in range(epochs):
-            self.optimizer(x, y, batch_size, learning_rate)
+            loss = self.optimizer(x, y, batch_size, learning_rate)
+            print(f"epoch {epoch}")
+            print(f"loss: {loss}")
+            loss_list.append(loss)
+
+        fig = plt.figure()
+        ax1 = fig.add_subplot(1,1,1)
+        ax1.plot(range(len(loss_list)), loss_list)
+        plt.savefig("out.png")
+
+    def feedforward(self, x):
+        activation = np.reshape(x, (len(x), 1))     ## make x in column vec
+        for layer in self.layer_list:
+            z = np.dot(layer.w, activation) + layer.b
+            activation = layer.activation_func(z)
+        return activation
+
+    def predict(self, x_test):
+        predicted_list = []
+        for x in x_test:
+            predicted = self.feedforward(x)
+            predicted_list.append(predicted)
+        return predicted_list

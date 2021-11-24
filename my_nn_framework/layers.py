@@ -12,8 +12,10 @@ class Layer(ActivationFunc):
         if self.in_features == None:
             self.in_features = in_features
 
-        self.w = np.random.normal(size=(self.in_features, self.out_features))
-        self.b = np.random.normal(size=self.out_features)
+        self.w = np.random.normal(size=(self.out_features, self.in_features))
+        self.b = np.random.normal(size=(self.out_features, 1))
+        # self.w = self.w.astype(object)
+        # self.b = self.b.astype(object)
 
     def __call__(self):
         raise NotImplementedError
