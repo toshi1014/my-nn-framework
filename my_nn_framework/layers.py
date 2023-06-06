@@ -3,13 +3,13 @@ from my_nn_framework import ActivationFunc
 
 
 class Layer(ActivationFunc):
-    def __init__(self, str_activation_func, in_features, out_features):
-        super(Layer, self).__init__(str_activation_func=str_activation_func)
+    def __init__(self, activation_func, in_features, out_features):
+        super(Layer, self).__init__(activation_func=activation_func)
         self.in_features = in_features
         self.out_features = out_features
 
     def init_weights(self, in_features):
-        if self.in_features == None:
+        if self.in_features is None:
             self.in_features = in_features
 
         self.w = np.random.normal(size=(self.out_features, self.in_features))
@@ -20,8 +20,12 @@ class Layer(ActivationFunc):
 
 
 class Dense(Layer):
-    def __init__(self, str_activation_func, out_features, in_features=None):
-        super(Dense, self).__init__(str_activation_func, in_features, out_features)
+    def __init__(self, activation_func, out_features, in_features=None):
+        super(Dense, self).__init__(
+            activation_func,
+            in_features,
+            out_features,
+        )
 
     def __call__(self):
         ...

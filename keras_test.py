@@ -2,13 +2,12 @@ import numpy as np
 from sklearn.datasets import load_digits
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
-import tensorflow as tf
 from tensorflow import keras as K
 
 mnist = load_digits()
 data = mnist.data
 label = mnist.target
-x_train, x_test, y_train, y_test =  train_test_split(data, label, test_size=0.3)
+x_train, x_test, y_train, y_test = train_test_split(data, label, test_size=0.3)
 y_train = K.utils.to_categorical(y_train)
 y_test = K.utils.to_categorical(y_test)
 
