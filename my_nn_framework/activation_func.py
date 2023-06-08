@@ -20,6 +20,7 @@ class ActivationFunc:
 
     @classmethod
     def relu(cls, x):
+
         return np.array(
             [[max(0, i)] for i in x],
             dtype=object,
@@ -27,11 +28,10 @@ class ActivationFunc:
 
     @classmethod
     def relu_derivative(cls, x):
-        val = np.array(
+        return np.array(
             [[1] if (i > 0) else [0] for i in x],
             dtype=object,
         )
-        return val
 
     @classmethod
     def sigmoid(cls, x):
@@ -39,12 +39,20 @@ class ActivationFunc:
 
     @classmethod
     def sigmoid_derivative(cls, x):
-        val = cls.sigmoid(x) * (1 - cls.sigmoid(x))
-        return val
+        return cls.sigmoid(x) * (1 - cls.sigmoid(x))
+
+    @classmethod
+    def softmax(cls, x):
+        return np.exp(x) / sum(np.exp(x))
+
+    @classmethod
+    def softmax_derivative(cls, x):
+        ...     # dummy
 
 
 derivative_pair_dict = {
     ActivationFunc.no: ActivationFunc.no_derivative,
     ActivationFunc.relu: ActivationFunc.relu_derivative,
     ActivationFunc.sigmoid: ActivationFunc.sigmoid_derivative,
+    ActivationFunc.softmax: ActivationFunc.softmax_derivative,
 }

@@ -1,7 +1,7 @@
 import numpy as np
 from sklearn.datasets import load_digits
 from sklearn.model_selection import train_test_split
-from my_nn_framework import Model, Dense, ActivationFunc, \
+from my_nn_framework import models, layers, ActivationFunc, \
     LossFunc, optimizers, to_categorical
 
 
@@ -21,20 +21,18 @@ def main():
     x_train, x_test, y_train_one_hot, y_test = get_data()
     in_features = x_train.shape[-1]
 
-    model = Model(
-        # Dense("no", in_features=in_features, out_features=2),
-        # Dense("no", out_features=10),
-        Dense(
+    model = models.Model(
+        # layers.Dense("no", in_features=in_features, out_features=2),
+        # layers.Dense("no", out_features=10),
+        layers.Dense(
             in_features=in_features,
             out_features=30,
-            activation_func=ActivationFunc.sigmoid,
+            activation_func=ActivationFunc.relu,
         ),
-        Dense(
+        layers.Dense(
             out_features=y_train_one_hot.shape[1],
             activation_func=ActivationFunc.sigmoid,
         ),
-        # Dense("relu", in_features=3, out_features=2),
-        # Dense("relu", out_features=1),
     )
 
     model.compile(optimizer=optimizers.SGD, loss=LossFunc.mse)
@@ -50,7 +48,7 @@ def main():
     predicted_one_hot = model.predict(x_test)
     predicted = [np.argmax(p) for p in predicted_one_hot]
 
-    accuracy = Model.evaluate(predicted, y_test)
+    accuracy = models.Model.evaluate(predicted, y_test)
 
     print(f"\naccuracy: {accuracy}")
 

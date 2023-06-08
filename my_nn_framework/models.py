@@ -1,5 +1,5 @@
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 from my_nn_framework import LossFunc
 
 
@@ -90,3 +90,14 @@ class Model(LossFunc):
             correct_or_wrong_list.append(correct_or_wrong)
 
         return sum(correct_or_wrong_list) / len(correct_or_wrong_list)
+
+
+class CNNModel:
+    def __init__(self, layer_list):
+        self.layer_list = layer_list
+
+    def __call__(self, x):
+        for layer in self.layer_list:
+            x = layer(x)
+
+        return x

@@ -1,15 +1,15 @@
 from .activation_func import ActivationFunc
-from .layers import Dense
+from . import layers
 from .loss_func import LossFunc
 from . import optimizers
 from .utils import to_categorical
-from .model import Model
+from . import models
 
 
 __all__ = [
     "ActivationFunc",
-    "Model",
-    "Dense",
+    "models",
+    "layers",
     "LossFunc",
     "optimizers",
     "to_categorical",
