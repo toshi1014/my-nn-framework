@@ -20,18 +20,15 @@ class ActivationFunc:
 
     @classmethod
     def relu(cls, x):
-
-        return np.array(
-            [[max(0, i)] for i in x],
-            dtype=object,
-        )
+        return np.array(list(
+            map(lambda x0: [max(0, x0.item())], x)
+        ))
 
     @classmethod
     def relu_derivative(cls, x):
-        return np.array(
-            [[1] if (i > 0) else [0] for i in x],
-            dtype=object,
-        )
+        return np.array(list(
+            map(lambda x0: [1] if (x0 > 0) else [0], x)
+        ))
 
     @classmethod
     def sigmoid(cls, x):

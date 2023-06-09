@@ -27,7 +27,7 @@ def main():
         layers.Dense(
             in_features=in_features,
             out_features=30,
-            activation_func=ActivationFunc.relu,
+            activation_func=ActivationFunc.sigmoid,
         ),
         layers.Dense(
             out_features=y_train_one_hot.shape[1],
